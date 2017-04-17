@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.8.16)  16 APR 2017 14:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.11.17)  17 APR 2017 13:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1403,11 +1403,7 @@ less on input line 67.
 LaTeX Warning: Unused global option(s):
     [paper=letter,fontsize=12pt].
 
-(./main.aux
-
-LaTeX Warning: Label `s:modelDevelopment' multiply defined.
-
-)
+(./main.aux)
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 83.
@@ -1641,7 +1637,7 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `math shift' on input line 175.
 
 [3]
-LaTeX Font Info:    Try loading font information for U+fplmbb on input line 212
+LaTeX Font Info:    Try loading font information for U+fplmbb on input line 213
 .
  (/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/ufplmbb.fd
 File: ufplmbb.fd 2003/10/30 Fontinst v1.914 font definitions for U/fplmbb.
@@ -1657,25 +1653,21 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             See the microtype manual for details.
 )
 [5]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 267.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 267.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 268.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 268.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 267.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 267.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 268.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 268.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 26E70729BC98C0EAF06FDD5A0922962A;794.
-
-
-LaTeX Warning: There were multiply-defined labels.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 267.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 268.
  ) 
 Here is how much of TeX's memory you used:
- 30049 strings out of 493014
- 568109 string characters out of 6133351
- 773861 words of memory out of 5000000
+ 30053 strings out of 493014
+ 568140 string characters out of 6133350
+ 775822 words of memory out of 5000000
  32882 multiletter control sequences out of 15000+600000
- 70413 words of font info for 254 fonts, out of 8000000 for 9000
+ 70636 words of font info for 257 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,15n,73p,10408b,686s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
@@ -1692,10 +1684,10 @@ st/fonts/type1/public/fpl/fplrc8a.pfb></usr/local/texlive/2016/texmf-dist/fonts
 ype1/urw/palatino/uplb8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/ur
 w/palatino/uplr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/palat
 ino/uplri8a.pfb>
-Output written on main.pdf (5 pages, 150342 bytes).
+Output written on main.pdf (5 pages, 151220 bytes).
 PDF statistics:
- 185 PDF objects out of 1000 (max. 8388607)
- 163 compressed objects within 2 object streams
+ 186 PDF objects out of 1000 (max. 8388607)
+ 164 compressed objects within 2 object streams
  40 named destinations out of 1000 (max. 500000)
  46189 words of extra memory for PDF output out of 51595 (max. 10000000)
 
