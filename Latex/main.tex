@@ -72,7 +72,7 @@
 \author{
 \large
 {\textsc{Pascal Bock, 199368 }}\\[2mm]
-{\textsc{Jakob Kübler, 199369 }}\\[2mm]
+{\textsc{Jakob Kübler, 199197 }}\\[2mm]
 {\textsc{Christian Weidele, 199370 }}\\[2mm]
 %\thanks{A thank you or further information}\\ % Your name
 %\normalsize \href{mailto:marco.torres.810@gmail.com}{marco.torres.810@gmail.com}\\[2mm] % Your email address
@@ -86,7 +86,7 @@
 
 
 \section{Introduction}
-The aim of the course \emph{Process Control} is to control a multivariable process unit. To do so, we will follow four steps for control system design. First we will model the system (\label{s:modelDevelopment}) before we will analyse the model in a second step. After that we will design and implement a controller as third and fourth step. \\
+The aim of the course \emph{Process Control} is to control a multivariable process unit. To do so, we will follow four steps for control system design. First we will model the system (\autoref{s:modelDevelopment}) before we will analyse the model in a second step. After that we will design and implement a controller as third and fourth step. \\
 Our focus lays not on developing a model, so we need a well documented multivariable model which is not to complex. With \cite{Jinasena2016} we found a good documented multivariable model of the ammonia synthesis. Other approaches of dynamic simulation of ammonia synthesis can be found in \cite{Kasiri2003} using Soave-Redlich-Kwong equation and modeling a four-bed ammonia synthesis catalytic reactor and \cite{Mancusi2009} using a three-bed ammonia synthesis catalytic reactor. But all these are not as good documented as \cite{Jinasena2016}.\\
 Ammonia is critical for production of fertilizers and one of the most produced chemicals in the world. The production of high amounts of ammonia made the fast growing world population of the last century possible. \cite{Pattabathula2016} \\
 Despite the simplicity of the model it is possible to simulate the unnstable behaviour of the system and the oscillatory behaviour of the temperature when steady state is disturbed. A controller not only for feed temperature before heat exchanger also for feed flow rate and composition of feed is recommended in \cite{Jinasena2016}. Using a simple PI-controller for temperature regulation is considered for a more complex model of ammonia synthesis in \cite{Morud1998}.
@@ -182,8 +182,9 @@ The temperature in volume compartment $V_i$ can be derived by using the ideal ga
 \begin{align}
 T^r \Big|_{V_i}=\frac{p \Delta V}{\sum_j n^r_j R} \epsilon \label{f:temperatureReactor}
 \end{align}
+
 \subsection{Energy Balances} \label{s:energyBalance}
-After developing an equation for the accumulation term we will derive an equation for the molar stream from $V_i$ to $V_{i+1}$-.  Considering a reactor without heat flow, no shaft work and constant pressure the energy balance for $V_i$ will be
+After developing an equation for the accumulation term we will derive an equation for the molar stream from $V_i$ to $V_{i+1}$.  Considering a reactor without heat flow, no shaft work and constant pressure the energy balance for $V_i$ will be
 \begin{align}
 \frac{d}{dt} H \Big|_{V_i} = \dot{H}\Big|_{V_{i-1}} - \dot{H}\Big|_{V_{i}}. \label{f:energybalance}
 \end{align}
@@ -191,11 +192,11 @@ Where, $\dot{H}\Big|_{V_{i-1}/V_i}$ are the enthalpy flow in ($i$) or out ($i-1$
 \begin{align}
 \sum_j nr_j \frac{d\tilde{H}_j}{dt} \Big|_{V_i} + m_c \frac{d\hat{H}_c}{dt}=
 -\sum_j \dot{n}^{r,g}_j\tilde{H}_j \Big|_{V_i} + 
-\sum_j \dot{n}^{r}_j\tilde{H}_j \Big|_{V_{i-1}} \left( \tilde{H}_j \Big|_{V_{i-1}} - \tilde{H}_j \Big|_{V_{i}} \right) \label{f:energybalance2}
+\sum_j \dot{n}^{r}_j \left( \tilde{H}_j \Big|_{V_{i-1}} - \tilde{H}_j \Big|_{V_{i}} \right) \label{f:energybalance2}
 \end{align}
 To simplify this equation we make the following assumption $d\tilde{H}_j \approx \tilde{c}_{p,j} dT$ and $\tilde{H}_1 - \tilde{H}_2 \approx \bar{\tilde{c}}_p \left( T_1- T_2 \right)$. $\tilde{c}_{p,j}$ is the molar heat capacity and $\bar{\tilde{c}}_p$ is the average molar heat capacity of a gas mixture. Plugging in the assumptions in \autoref{f:energybalance2} and using the time derivative of the ideal gas law ($\frac{dp}{dt}=0$) for changing the expression $\frac{dT}{dt}$ in \autoref{f:energybalance2} we will get the following expression:
 \begin{align}
-T_rC_p\dot{n}^{r,g} \Big|_{V_i} - \Delta \tilde{H}_r n_r m_c \Big|_{V_i} =
+T_rC_p\dot{n}^{r,g} \Big|_{V_i} - \Delta \tilde{H}_r n_r r m_c \Big|_{V_i} =
 T_rC_p \dot{n}_r \Big|_{V_i} - 
 \dot{n}_r \Big|_{V_{i-1}}
 \left[
@@ -205,19 +206,19 @@ T_r\Big|_{V_{i-1}} - T_r \Big|_{V_i}
 \right)
 \right]
 \end{align}
-This can be rewritten in a matirx form
+This can be rewritten in a matrix form
 \begin{align}
 b=A \cdot {n}_r.  \label{f:energyMatrix}
 \end{align}
 where $A \in \mathbb{R}^{N \times N}$ and $\dot{n}_r, b \in \mathbb{R}^{N \times 1}$. The components of $b$ and $A$ can be written as
 \begin{align}
-b_1&= \\
-b_i&= 
+b_1&= T_r C_p \dot{n}^{r,g} \Big|_{\Delta V} - \Delta \tilde{H}_r n_r r m_c \Big|_{\Delta V} + \dot{n}_r\ \Big|_{\Delta V} \left[ T_r C_p \Big|_{\Delta V} + \dot{n}_r \bar{\tilde{c}}_p \Big|_{0} n_r\Big|_{\Delta V} \left( T_r\Big|_{0} - T_r\Big|_{\Delta V} \right) \right] \\
+b_i&= T_r C_p \dot{n}^{r,g} \Big|_{i\Delta V} - \Delta \tilde{H}_r n_r r m_c \Big|_{i\Delta V}\ ,\ i\ \epsilon\  \{ 2,3,\dots ,N\}
 \end{align}
 and
 \begin{align}
-A_{i,i}&=\\
-A_{i,i-1}&=.
+A_{i,i}&=T_r C_p\Big|_{i\Delta V}\ , \ i\ \epsilon\  \{ 1,2,\dots ,N\}\\
+A_{i,i-1}&=-T_r C_p \Big|_{i\Delta V} - \bar{\tilde{c}}_p\Big|_{(i-1)\Delta V} n_r\Big|_{i\Delta V} \left(T_r\Big|_{(i-1)\Delta V} - T_r \Big|_{i\Delta V} \right)\ , \ i\ \epsilon\  \{ 2,3,\dots ,N\}.
 \end{align}
 Solving \autoref{f:energyMatrix} will give $\dot{n}_r$. To get the desired expression for $\dot{n}^r_j$ the mole fraction $x_j \Big|_{V_i}=\frac{n_j \Big|_{V_i}}{\sum_j n_j \Big|_{V_i}}$ is used.
 \begin{align}
@@ -227,11 +228,11 @@ Solving \autoref{f:energyMatrix} will give $\dot{n}_r$. To get the desired expre
 \subsection{Heat Exchanger}
 There are two streams of gas and respectively four relevant temperatures for a counter current heat exchanger. The inlet Temperature $T^{feed}_j$ into the heat exchanger of the reactants and the outlet temperature of the heated up reactants $T^r_1$, which is also the inlet temperature of the reactor. The stream of Ammonia, by-products and inert gas leaves the reactor with $T^r_N$ and enters the heat exchanger to heat up the inlet stream of the reactor. The gas mixtures leaves the heat exchanger with temperature $T_o$. In \cite{Jinasena2016} you can find a short derivation for the equation of the temperature reactants entering the reactor
 \begin{align}
-T^r_1=\frac{T^{feed} + \frac{U A}{\dot{m}_i \hat{c}^i_p}}{1 + \frac{U A}{\dot{m}_i \hat{c}^i_p}} \label{f:tempInReact}
+T^r_1=\frac{T^{feed} + \frac{U A}{\dot{m}_i \hat{c}^i_p} T^r_N}{1 + \frac{U A}{\dot{m}_i \hat{c}^i_p}} \label{f:tempInReact}
 \end{align}
 and the outlet stream of the heat exchanger after heating up the reaction gas
 \begin{align}
-T_o=\frac{T^r_N + \frac{U A}{\dot{m}_i \hat{c}^i_p} T^r_N}{1+ \frac{U A}{\dot{m}_i \hat{c}^i_p}}. \label{f:tempOutExchanger}
+T_o=\frac{T^r_N + \frac{U A}{\dot{m}_i \hat{c}^i_p} T^{feed}}{1+ \frac{U A}{\dot{m}_i \hat{c}^i_p}}. \label{f:tempOutExchanger}
 \end{align}
 Where $\dot{m}_i=\sum_j \dot{m}^i_j$ is the overall mass flow through volume compartment $i$.
 
