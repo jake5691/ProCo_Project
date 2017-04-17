@@ -12,15 +12,15 @@ close all; clear; clc;
 
 % Parameter p
 p.A=238; % [m^] : Heat transfer area
-p.c_p=35500; % [J/(kmol K)] : Molar heat capacity of gas mixture
-p.c_pc=1100; % [J/(kg K)] : Specific heat capacity of catalyst
-p.C_pc=138.4e6; % [J/K] : Total heat capacity of catalyst
-p.dH_r=-92.4e6; % [J/kmol] : Enthalpy of the reaction
+p.cp=35500; % [J/(kmol K)] : Molar heat capacity of gas mixture
+p.cpc=1100; % [J/(kg K)] : Specific heat capacity of catalyst
+p.Cp=138.4e6; % [J/K] : Total heat capacity of catalyst
+p.deltaH=-92.4e6; % [J/kmol] : Enthalpy of the reaction
 p.E=1.98464e8; % [J/kmol] : Activation energy of re- verse reaction
 p.epsilon=0.42; % [1] : Void fraction of catalyst
 p.f=4.75; % [1] : Catalyst activity factor
 p.k_0=2.5714e16; % [(kmol atm^(1/2))/(m^3 h)] Pre?exponential factor of reverse reaction
-p.m_c=125840; % [kg] : Total mass of catalyst
+p.mC=125840; % [kg] : Total mass of catalyst
 p.M_Ar=39.95; % [kg/kmol] : Molar mass of Ar atom
 p.M_H2=2.016; % [kg/kmol] : Molar mass of H2 molecule
 p.M_N2=28.02; % [kg/kmol] : Molar mass of N2 molecule
@@ -48,8 +48,8 @@ oc.x=[oc.x_H2_in oc.x_N2_in oc.x_NH3_in oc.x_Ar_in];
 oc.T_in=oc.T_in+273.15; % [K] : Feed temperature (heat exchanger inlet)
 
 % avarege molar mass for inlet of reactor
-p.M_tilde=0;
+p.Mtilde=0;
 for i=1:4
-p.M_tilde=p.M_tilde+sum([oc.x(i)*p.M(i)]);
+p.Mtilde=p.M_tilde+sum([oc.x(i)*p.M(i)]);
 end % for i
 p.M(5)=p.M_tilde;
