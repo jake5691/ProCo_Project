@@ -212,13 +212,13 @@ b=A \cdot {n}_r.  \label{f:energyMatrix}
 \end{align}
 where $A \in \mathbb{R}^{N \times N}$ and $\dot{n}_r, b \in \mathbb{R}^{N \times 1}$. The components of $b$ and $A$ can be written as
 \begin{align}
-b_1&= T_r C_p \dot{n}^{r,g} \Big|_{\Delta V} - \Delta \tilde{H}_r n_r r m_c \Big|_{\Delta V} + \dot{n}_r\ \Big|_{\Delta V} \left[ T_r C_p \Big|_{\Delta V} + \dot{n}_r \bar{\tilde{c}}_p \Big|_{0} n_r\Big|_{\Delta V} \left( T_r\Big|_{0} - T_r\Big|_{\Delta V} \right) \right] \\
-b_i&= T_r C_p \dot{n}^{r,g} \Big|_{i\Delta V} - \Delta \tilde{H}_r n_r r m_c \Big|_{i\Delta V}\ ,\ i\ \epsilon\  \{ 2,3,\dots ,N\}
+b_1&= T_r C_p \dot{n}^{r,g} \Big|_{V_1} - \Delta \tilde{H}_r n_r r m_c \Big|_{V_1} + \dot{n}^{feed}_r\ \ \left[ T_r C_p \Big|_{V_1} + \dot{n}^{feed}_r \bar{\tilde{c}}_p  n_r\Big|_{V_1} \left( T^{r}_1 - T_r\Big|_{V_1} \right) \right] \\
+b_i&= T_r C_p \dot{n}^{r,g} \Big|_{V_i} - \Delta \tilde{H}_r n_r r m_c \Big|_{V_i}\ ,\ i\ \epsilon\  \{ 2,3,\dots ,N\}
 \end{align}
 and
 \begin{align}
-A_{i,i}&=T_r C_p\Big|_{i\Delta V}\ , \ i\ \epsilon\  \{ 1,2,\dots ,N\}\\
-A_{i,i-1}&=-T_r C_p \Big|_{i\Delta V} - \bar{\tilde{c}}_p\Big|_{(i-1)\Delta V} n_r\Big|_{i\Delta V} \left(T_r\Big|_{(i-1)\Delta V} - T_r \Big|_{i\Delta V} \right)\ , \ i\ \epsilon\  \{ 2,3,\dots ,N\}.
+A_{i,i}&=T_r C_p\Big|_{V_i}\ , \ i\ \epsilon\  \{ 1,2,\dots ,N\}\\
+A_{i,i-1}&=-T_r C_p \Big|_{V_i} - \bar{\tilde{c}}_p\Big|_{V_{i-1}} n_r\Big|_{V_i} \left(T_r\Big|_{V_{i-1}} - T_r \Big|_{V_i} \right)\ , \ i\ \epsilon\  \{ 2,3,\dots ,N\}.
 \end{align}
 Solving \autoref{f:energyMatrix} will give $\dot{n}_r$. To get the desired expression for $\dot{n}^r_j$ the mole fraction $x_j \Big|_{V_i}=\frac{n_j \Big|_{V_i}}{\sum_j n_j \Big|_{V_i}}$ is used.
 \begin{align}
@@ -236,7 +236,7 @@ T_o=\frac{T^r_N + \frac{U A}{\dot{m}_i \hat{c}^i_p} T^{feed}}{1+ \frac{U A}{\dot
 \end{align}
 Where $\dot{m}_i=\sum_j \dot{m}^i_j$ is the overall mass flow through volume compartment $i$.
 
-\subsection{}
+\subsection{Possible Control Design}
 
 \subsection{Degree of Freedom Analysis}
 
