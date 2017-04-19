@@ -95,7 +95,7 @@ Despite the simplicity of the model it is possible to simulate the unnstable beh
 \section{Model Development} \label{s:modelDevelopment}
 
 The model describes the Haber-Bosch process by focusing on the main reaction
-\reaction{N2(g) + 3H2(g) <=>[Fe] NH3(g).} \label{f:reaction}
+\reaction{N2(g) + 3H2(g) <=>[Fe] 2NH3(g).} \label{f:reaction}
 In addition to \ce{N2} and \ce{H2} Argon (\ce{Ar}) is used as an inert gas. The reactor is using an iron (\ce{Fe}) based catalyst. The same assumptions as in \cite{Jinasena2016} are holding.\\
 In this chapter we will show a short derivation of the model equation we used in Matlab. We will proceed in four steps. First we will derive the mole balances. For solving these we need to develop an equation for the accumulation term and derive the energy balance in a second and third step. And in a last step we will evolve the equations for the heat exchanger.
 
