@@ -23,6 +23,10 @@ end % for i
 
 dndt=reshape(dndtMat',p.N*p.n,1);
 
+% if mod(t,0.1)==0
+%     disp(['Time t=',num2str(t)]);
+% end % if
+t
 end % function ODE_MassBalance
 
 
@@ -41,7 +45,7 @@ T=TCalc(p,oc,n); % computing Temperature for first compartment (reactor inlet)
 Tfeed=TfeedCalc(p,oc,nVec); %v calculatung feed temperature
 Cp=sum(n.*p.cpg)+p.Cp; % heat capacity of reactor compartment [22]
 b(1)=T*Cp*nGen(1) - p.deltaH*nGes(n)*r(p,oc,n)*p.mC + sum(p.nDotFeed) *...
-    (T*Cp + sum(p.nDotFeed)*p.cpg+nGes(n)*(Tfeed-T)); % [26]
+    (T*Cp + sum(p.nDotFeed)*p.cpg*nGes(n)*(Tfeed-T)); % [26]
 for i=2:p.N
     n=nVec(p.n*i-(p.n-1):p.n*i); % computung n for compartment i
     Cp=sum(n.*p.cpg)+p.Cp; % heat capacity of reactor compartment [22]
@@ -50,7 +54,7 @@ end % for
 
 for i=1:p.N
     n=nVec(p.n*i-(p.n-1):p.n*i); % amount of species in V_i
-    Cp=sum(n.*p.cpg)+p.Cp; % heat capacity of reactor compartment [22]
+    Cp=nGes(n)*p.cpg+p.Cp; % heat capacity of reactor compartment [22]
     T=TCalc(p,oc,n); % Temperature at V_i
     A(i,i)=T*Cp; % main diagonal of matrix [28]
     if i>1
@@ -84,7 +88,7 @@ for i=1:p.N % for all compartments
     for j=1:p.n % for all three species
         n=nVec(p.n*i-(p.n-1):p.n*i);
         nRG(i,j)=p.eta(j)*r(p,oc,n)*p.mC*1/p.N; % computung the generated
-                                                % amount of each species j [3]
+        % amount of each species j [3]
     end % for j
 end % for i
 end % funtion CalcGenMoles
@@ -113,7 +117,7 @@ Kp=KpGB^2; % [11]
 kPlus=kMinus*Kp; % [6]
 
 % reaction rate by using Temkin-Pyzhev equation
-pPart=pPartCalc(oc,n);
+pPart=pPartCalc(oc,n)*9.8692e-6; % !!![atm]!!!
 r=p.f/p.rhoC * (kPlus * (pPart(2)*pPart(1)^1.5)/pPart(3) - kMinus * pPart(3)/pPart(1)^1.5 );
 end % function r
 
@@ -146,7 +150,3 @@ function nGes=nGes(n)
 %% calculating overall moles
 nGes=sum(n);
 end % function nGes
-
-
-
-

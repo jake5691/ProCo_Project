@@ -45,7 +45,7 @@ T=TCalc(p,oc,n); % computing Temperature for first compartment (reactor inlet)
 Tfeed=TfeedCalc(p,oc,nVec); %v calculatung feed temperature
 Cp=sum(n.*p.cpg)+p.Cp; % heat capacity of reactor compartment [22]
 b(1)=T*Cp*nGen(1) - p.deltaH*nGes(n)*r(p,oc,n)*p.mC + sum(p.nDotFeed) *...
-    (T*Cp + sum(p.nDotFeed)*p.cpg+nGes(n)*(Tfeed-T)); % [26]
+    (T*Cp + sum(p.nDotFeed)*p.cpg*nGes(n)*(Tfeed-T)); % [26]
 for i=2:p.N
     n=nVec(p.n*i-(p.n-1):p.n*i); % computung n for compartment i
     Cp=sum(n.*p.cpg)+p.Cp; % heat capacity of reactor compartment [22]
@@ -150,7 +150,3 @@ function nGes=nGes(n)
 %% calculating overall moles
 nGes=sum(n);
 end % function nGes
-
-
-
-

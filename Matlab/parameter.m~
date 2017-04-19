@@ -33,18 +33,17 @@ p.pAtmos=   1.01325e5;  % [Pa] : Atmospheric pressure
 p.R     =   8314;       % [J/kmol K] : Universal gas constant
 p.rhoC  =   2200;       % [kg/m^3] : Packing density of cat- alyst
 p.U     =   1.9296e6;   % [J/(h m^2 K)] Overall heat transfer coefficient
-p.V     =   57.2;       % [m^3] : Volume of the reactor
+p.V     = 57.2;         % [m^3] : Volume of the reactor
 p.DeltaV=   p.V/p.N;    % [m^3] : Volume of compartement
-
 % Operating conditions
-oc.mDot =   67.6;       % [kg/s] : Mass flow rate - reactor inlet
-oc.p    =   178e5;      % [Pa] : Controlled reactor pres- sure
-oc.Tin  =   350;        % [°C] : Feed temperature (heat exchanger inlet)
-oc.xH2  =   0.6972;     % [1] : Mole fraction of H2 at reactor inlet
-oc.xN2  =   0.24;       % [1] : Mole fraction of N2 at reactor inlet
-oc.xNH3 =   0.0212;     % [1] : Mole fraction of NH3 at reactor inlet
-oc.xAr  =   1-(oc.xH2 + oc.xN2 + oc.xNH3);
-oc.x    =   [oc.xH2 oc.xN2 oc.xNH3 oc.xAr];
+oc.mDot=67.6; % [kg/s] : Mass flow rate - reactor inlet
+oc.p=178e5; % [Pa] : Controlled reactor pres- sure
+oc.Tin=350; % [°C] : Feed temperature (heat exchanger inlet)
+oc.xH2=0.6972; % [1] : Mole fraction of H2 at reactor inlet
+oc.xN2=0.24; % [1] : Mole fraction of N2 at reactor inlet
+oc.xNH3=0.0212; % [1] : Mole fraction of NH3 at reactor inlet
+oc.xAr=1-(oc.xH2 + oc.xN2 + oc.xNH3);
+oc.x=[oc.xH2 oc.xN2 oc.xNH3 oc.xAr];
 
 % change of unit for Feed Temperature °C->K
 oc.Tin=oc.Tin+273.15; % [K] : Feed temperature (heat exchanger inlet)
