@@ -43,12 +43,12 @@ nGen=sum(nRG(p,oc,nVec),2); % adding up rows
 n=nVec(1:p.n); % for first compartment
 T=TCalc(p,oc,n); % computing Temperature for first compartment (reactor inlet)
 Tfeed=TfeedCalc(p,oc,nVec); %v calculatung feed temperature
-Cp=sum(n.*p.cpg)+p.Cp; % heat capacity of reactor compartment [22]
+Cp=sum(n)*p.cpg+p.Cp; % heat capacity of reactor compartment [22]
 b(1)=T*Cp*nGen(1) - p.deltaH*nGes(n)*r(p,oc,n)*p.mC + sum(p.nDotFeed) *...
     (T*Cp + sum(p.nDotFeed)*p.cpg*nGes(n)*(Tfeed-T)); % [26]
 for i=2:p.N
     n=nVec(p.n*i-(p.n-1):p.n*i); % computung n for compartment i
-    Cp=sum(n.*p.cpg)+p.Cp; % heat capacity of reactor compartment [22]
+    Cp=nGes(n)*p.cpg+p.Cp; % heat capacity of reactor compartment [22]
     b(i)=TCalc(p,oc,n)*Cp*nGen(i) - p.deltaH*nGes(n)*r(p,oc,n)*p.mC; % [27]
 end % for
 
@@ -121,12 +121,6 @@ pPart=pPartCalc(oc,n)*9.8692e-6; % !!![atm]!!!
 r=p.f/p.rhoC * (kPlus * (pPart(2)*pPart(1)^1.5)/pPart(3) - kMinus * pPart(3)/pPart(1)^1.5 );
 end % function r
 
-
-function T=TCalc(p,oc,n)
-%% Calulating Temperature in one volume compartment
-T=(oc.p*p.V)/(nGes(n)*p.R*p.N) *p.epsilon; % [K] [12]
-end % function T
-
 function Tfeed=TfeedCalc(p,oc,nVec)
 %% Calculation the inlet temperature of reactor
 % Temperature at the end of reactor
@@ -135,6 +129,11 @@ Tout=TCalc(p,oc,n); % computing temperature at reactor outlet
 % feed temperature after heat exchanger
 Tfeed=(oc.Tin + ( (p.U*p.A)/(oc.mDot*p.cpg) * Tout) ) / (1 + (p.U*p.A)/(oc.mDot*p.cpg) );
 end % function Tfeed
+
+function T=TCalc(p,oc,n)
+%% Calulating Temperature in one volume compartment
+T=(oc.p*p.V)/(nGes(n)*p.R*p.N) * p.epsilon; % [K] [12]
+end % function T
 
 function pPart=pPartCalc(oc,n)
 %% Calculating partial pressure
