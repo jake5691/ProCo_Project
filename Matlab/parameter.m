@@ -11,7 +11,7 @@ close all; clear; clc;
 %% Parameter and Operating conditions
 
 % Parameter p
-p.A=238; % [m^] : Heat transfer area
+p.A=238; % [m^2] : Heat transfer area
 p.cpg=35500; % [J/(kmol K)] : Molar heat capacity of gas mixture
 p.cpc=1100; % [J/(kg K)] : Specific heat capacity of catalyst
 p.Cp=138.4e6; % [J/K] : Total heat capacity of catalyst

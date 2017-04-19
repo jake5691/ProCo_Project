@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.11.17)  18 APR 2017 11:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.8.16)  19 APR 2017 10:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1653,20 +1653,20 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             See the microtype manual for details.
 )
 [5]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 268.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 268.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 273.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 273.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 268.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 268.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 273.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 273.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 26E70729BC98C0EAF06FDD5A0922962A;794.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 268.
+(rerunfilecheck)             Checksum: AE127337547B232EEF42A81E2664C055;920.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 273.
  ) 
 Here is how much of TeX's memory you used:
- 30053 strings out of 493014
- 568140 string characters out of 6133350
- 775821 words of memory out of 5000000
- 32882 multiletter control sequences out of 15000+600000
+ 30057 strings out of 493014
+ 568200 string characters out of 6133351
+ 776822 words of memory out of 5000000
+ 32884 multiletter control sequences out of 15000+600000
  70636 words of font info for 257 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,15n,73p,10408b,686s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1684,10 +1684,10 @@ st/fonts/type1/public/fpl/fplrc8a.pfb></usr/local/texlive/2016/texmf-dist/fonts
 ype1/urw/palatino/uplb8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/ur
 w/palatino/uplr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/palat
 ino/uplri8a.pfb>
-Output written on main.pdf (5 pages, 151221 bytes).
+Output written on main.pdf (5 pages, 151852 bytes).
 PDF statistics:
- 186 PDF objects out of 1000 (max. 8388607)
- 164 compressed objects within 2 object streams
- 40 named destinations out of 1000 (max. 500000)
- 46189 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 196 PDF objects out of 1000 (max. 8388607)
+ 174 compressed objects within 2 object streams
+ 42 named destinations out of 1000 (max. 500000)
+ 46205 words of extra memory for PDF output out of 51595 (max. 10000000)
 

@@ -73,7 +73,7 @@
 \large
 {\textsc{Pascal Bock, 199368 }}\\[2mm]
 {\textsc{Jakob Kübler, 199197 }}\\[2mm]
-{\textsc{Christian Weidele,  200329}}\\[2mm]
+{\textsc{Christian Weidele, 200329 }}\\[2mm]
 %\thanks{A thank you or further information}\\ % Your name
 %\normalsize \href{mailto:marco.torres.810@gmail.com}{marco.torres.810@gmail.com}\\[2mm] % Your email address
 }
@@ -87,7 +87,7 @@
 
 \section{Introduction}
 The aim of the course \emph{Process Control} is to control a multivariable process unit. To do so, we will follow four steps for control system design. First we will model the system (\autoref{s:modelDevelopment}) before we will analyse the model in a second step. After that we will design and implement a controller as third and fourth step. \\
-Our focus lays not on developing a model, so we need a well documented multivariable model which is not to complex. With \cite{Jinasena2016} we found a good documented multivariable model of the ammonia synthesis. Other approaches of dynamic simulation of ammonia synthesis can be found in \cite{Kasiri2003} using Soave-Redlich-Kwong equation and modeling a four-bed ammonia synthesis catalytic reactor and \cite{Mancusi2009} using a three-bed ammonia synthesis catalytic reactor. But all these are not as good documented as \cite{Jinasena2016}.\\
+Our focus lays not on developing a model, so we need a well documented multivariable model which is not to complex. With \cite{Jinasena2016} we found a good documented multivariable model of the ammonia synthesis. Other approaches of dynamic simulation of ammonia synthesis can be found in \cite{Kasiri2003} using Soave-Redlich-Kwong equation and modeling a four-bed ammonia synthesis catalytic reactor and \cite{Mancusi2009} using a three-bed ammonia synthesis catalytic reactor. In \cite{Morud1998} a model based on the Arrhenius equation for for- and backward reaction is considered. But all these are not as good documented as \cite{Jinasena2016} in which the Arrhenius equation is only used for the reverse reaction rate constant and the reaction rate for the forward reaction is based on the Gillespie-Beattie correlation.\\
 Ammonia is critical for production of fertilizers and one of the most produced chemicals in the world. The production of high amounts of ammonia made the fast growing world population of the last century possible. \cite{Pattabathula2016} \\
 Despite the simplicity of the model it is possible to simulate the unnstable behaviour of the system and the oscillatory behaviour of the temperature when steady state is disturbed. A controller not only for feed temperature before heat exchanger also for feed flow rate and composition of feed is recommended in \cite{Jinasena2016}. Using a simple PI-controller for temperature regulation is considered for a more complex model of ammonia synthesis in \cite{Morud1998}.
 
@@ -177,7 +177,7 @@ The production of species $j$ can be expressed in dependence of the reaction rat
 \begin{align}
 \dot{n}^{r,g}_j\Big|_{V_{i}}=\nu_j r\Big|_{V_i} m_c \frac{\Delta V}{V} \label{f:reactionrate}
 \end{align}
-For calculating the only unknown the Temkin-Pyzhev equation $r \Big|_{V_i}=f\left( k_+, k_- \right)$ is used and can be found in \cite{Jinasena2016}. To derivate the rate constant for the reverse reaction an Arrhenius approach \cite[p. 148]{Kamp1988} $k_-=k^-_0 exp\left( - \frac{E_{A}}{RT} \right)$ is used. Via $k_+=k_- K_p$ and the Gillespie-Beattie correlation for the equilibrium constant $K_p$ it is possible to derive the rate constant for the forward reaction.\\
+For calculating the only unknown the Temkin-Pyzhev equation $r \Big|_{V_i}=f\left( k_+, k_- \right)$ is used and can be found in \cite{Jinasena2016}. To derivate the rate constant for the reverse reaction an Arrhenius approach \cite[p. 148]{Kamp1988} $k_-=k^-_0 exp\left( - \frac{E_{A}}{RT} \right)$ is used. Via $k_+=k_- K_p$ and the Gillespie-Beattie correlation for the equilibrium constant $K_p$ it is possible to derive the rate constant for the forward reaction. The partial pressure is calculated like shown in \cite{Kamp1988}.\\
 The temperature in volume compartment $V_i$ can be derived by using the ideal gas law $pV=nRT$ and considering the porosity of the catalyst bed (void fraction of catalyst $\epsilon$).
 \begin{align}
 T^r \Big|_{V_i}=\frac{p \Delta V}{\sum_j n^r_j R} \epsilon \label{f:temperatureReactor}
@@ -235,6 +235,11 @@ and the outlet stream of the heat exchanger after heating up the reaction gas
 T_o=\frac{T^r_N + \frac{U A}{\dot{m}_i \hat{c}^i_p} T^{feed}}{1+ \frac{U A}{\dot{m}_i \hat{c}^i_p}}. \label{f:tempOutExchanger}
 \end{align}
 Where $\dot{m}_i=\sum_j \dot{m}^i_j$ is the overall mass flow through volume compartment $i$.
+
+\subsection{}
+
+\subsection{Degree of Freedom Analysis}
+
 
 \section{Simulation Results}
 
