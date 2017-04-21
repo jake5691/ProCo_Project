@@ -3,8 +3,8 @@ function dndt=ODE_System(t,n,p,oc)
 % special case: inlet
 p.nDotFeed=oc.mDot/sum(oc.x.*p.M) * oc.x;
 
-nMatrix=SolveLSE(p,oc,n);
-nGenMatrix=nRG(p,oc,n);
+nMatrix=SolveLSE(p,oc,n); % computing in and out-/ inflow of each species at each compartment
+nGenMatrix=nRG(p,oc,n); % computing generated moles due to reaction
 % for both matrices:
 % row: 1:N : volume compartment
 % column: 1:3 : species
@@ -45,13 +45,14 @@ T=TCalc(p,oc,n); % computing Temperature for first compartment (reactor inlet)
 Tfeed=TfeedCalc(p,oc,nVec); %v calculatung feed temperature
 Cp=sum(n)*p.cpg+p.Cp; % heat capacity of reactor compartment [22]
 b(1)=T*Cp*nGen(1) - p.deltaH*nGes(n)*r(p,oc,n)*p.mC + sum(p.nDotFeed) *...
-    (T*Cp + sum(p.nDotFeed)*p.cpg*nGes(n)*(Tfeed-T)); % [26]
+    (T*Cp + p.cpg*nGes(n)*(Tfeed-T)); % [26]
 for i=2:p.N
     n=nVec(p.n*i-(p.n-1):p.n*i); % computung n for compartment i
     Cp=nGes(n)*p.cpg+p.Cp; % heat capacity of reactor compartment [22]
     b(i)=TCalc(p,oc,n)*Cp*nGen(i) - p.deltaH*nGes(n)*r(p,oc,n)*p.mC; % [27]
 end % for
 
+% making matrix A
 for i=1:p.N
     n=nVec(p.n*i-(p.n-1):p.n*i); % amount of species in V_i
     Cp=nGes(n)*p.cpg+p.Cp; % heat capacity of reactor compartment [22]
@@ -74,7 +75,11 @@ nDotr=linsolve(A,b); % solving equation gives you amount of species at each volu
 nDotrj=NaN(p.N,p.n);
 for i=1:p.N
     n=nVec(p.n*i-(p.n-1):p.n*i); % using n vector for each compartment
-    nDotrj(i,:)=nDotr(i)*x(n);
+    if n([1 2 3])==0
+        nDotrj(i,:)=nDotr(i)*oc.x;
+    else
+        nDotrj(i,:)=nDotr(i)*x(n);
+    end % if
 end % for i
 
 end
@@ -95,30 +100,34 @@ end % funtion CalcGenMoles
 
 function r=r(p,oc,n)
 %% Calculating reaction rate r
-
-% one time calculation of T
-T=TCalc(p,oc,n);
-
-% calculation of rate constant backwards reaction k-
-kMinus=p.k0* exp(- p.E/(p.R*T)); % [5]
-
-% Calculating dimensionless pressure
-pStar=oc.p/p.pAtmos; % [10]
-
-% using Gillespie-Beattie correlation
-alpha= 0.1191849/T + 91.87212/T^2 + 25122730/T^4; % [8]
-KpGBStar= 10^(-2.69112*log10(T) - 5.51926e-5*T + 1.84886e-7*T^2 + 2001.6/T + 2.6899); % [9]
-KpGB=KpGBStar*10^(alpha*pStar); % [7]
-
-% calculation of equilibrium constant
-Kp=KpGB^2; % [11]
-
-% calculation of rate konstant forward reaction k+
-kPlus=kMinus*Kp; % [6]
-
-% reaction rate by using Temkin-Pyzhev equation
-pPart=pPartCalc(oc,n)*9.8692e-6; % !!![atm]!!!
-r=p.f/p.rhoC * (kPlus * (pPart(2)*pPart(1)^1.5)/pPart(3) - kMinus * pPart(3)/pPart(1)^1.5 );
+if n([1 3])==0
+    r=0;
+else
+    % one time calculation of T
+    T=TCalc(p,oc,n);
+    
+    % calculation of rate constant backwards reaction k-
+    kMinus=p.k0* exp(- p.E/(p.R*T)); % [5]
+    
+    % Calculating dimensionless pressure
+    pStar=oc.p/p.pAtmos; % [10]
+    
+    % using Gillespie-Beattie correlation
+    alpha= 0.1191849/T + 91.87212/T^2 + 25122730/T^4; % [8]
+    KpGBStar= 10^(-2.69112*log10(T) - 5.51926e-5*T + 1.84886e-7*T^2 + 2001.6/T + 2.6899); % [9]
+    KpGB=KpGBStar*10^(alpha*pStar); % [7]
+    
+    % calculation of equilibrium constant
+    Kp=KpGB^2; % [11]
+    
+    % calculation of rate konstant forward reaction k+
+    kPlus=kMinus*Kp; % [6]
+    
+    % reaction rate by using Temkin-Pyzhev equation
+    pPart=pPartCalc(oc,n)*9.8692e-6; % !!![atm]!!!
+    
+    r=p.f/p.rhoC * (kPlus * (pPart(2)*pPart(1)^1.5)/pPart(3) - kMinus * pPart(3)/pPart(1)^1.5 );
+end %if
 end % function r
 
 function Tfeed=TfeedCalc(p,oc,nVec)
