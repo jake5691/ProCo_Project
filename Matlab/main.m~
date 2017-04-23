@@ -10,8 +10,12 @@
 function main
 
 parameter(); % to load p and oc in workspaceç
+%nVecTest=reshape(repmat([0.3836 0.1321 0.0117],p.N,1)',p.n*p.N,1);
+%ODE_System(5,nVecTest,p,oc)
 
-tSpan=linspace(0,1.9,p.timeStep); % [h]
+
+
+tSpan=linspace(0,1,p.timeStep); % [h]
 n0=reshape(oc.IC(:,1:p.n)',p.n*p.N,1);
 
 options = odeset();

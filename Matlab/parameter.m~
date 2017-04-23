@@ -3,8 +3,7 @@ close all; clear; clc;
 
 %% Predifinitions
 
-% 'order' of molecules
-% [H2 N2 NH3 Ar]
+
 
 % naming of variables
 % -
@@ -27,31 +26,42 @@ p.MN2   =   28.02;      % [kg/kmol] : Molar mass of N2 molecule
 p.MNH3  =   17.034;     % [kg/kmol] : Molar mass of NH3 molecule
 p.M     =   [p.MH2 p.MN2 p.MNH3 p.MAr];
 p.N     =   150;        % [1] : Number of reactor compartments (Decided after a few trials)
-p.n     =   4;          % [1] : Number of  species
-p.eta   =   [-3 -1 2 0]; % [1] : Stoichiometric matrix [H2 N2 NH3 Ar]
+p.n     =   3;          % [1] : Number of  species
+p.eta   =   [-3 -1 2];  % [1] : Stoichiometric matrix [H2 N2 NH3], changed because inert gas does not take part in reaction
 p.pAtmos=   1.01325e5;  % [Pa] : Atmospheric pressure
 p.R     =   8314;       % [J/kmol K] : Universal gas constant
 p.rhoC  =   2200;       % [kg/m^3] : Packing density of cat- alyst
 p.U     =   1.9296e6;   % [J/(h m^2 K)] Overall heat transfer coefficient
-p.V     = 57.2;         % [m^3] : Volume of the reactor
-p.DeltaV=   p.V/p.N;    % [m^3] : Volume of compartement
+p.V     =   57.2;       % [m^3] : Volume of the reactor
+
 % Operating conditions
-oc.mDot=67.6; % [kg/s] : Mass flow rate - reactor inlet
-oc.p=178e5; % [Pa] : Controlled reactor pres- sure
-oc.Tin=350; % [°C] : Feed temperature (heat exchanger inlet)
-oc.xH2=0.6972; % [1] : Mole fraction of H2 at reactor inlet
-oc.xN2=0.24; % [1] : Mole fraction of N2 at reactor inlet
-oc.xNH3=0.0212; % [1] : Mole fraction of NH3 at reactor inlet
-oc.xAr=1-(oc.xH2 + oc.xN2 + oc.xNH3);
-oc.x=[oc.xH2 oc.xN2 oc.xNH3 oc.xAr];
+oc.mDot =   67.6*60;    % [kg/h] : Mass flow rate - reactor inlet
+oc.p    =   178e5;      % [Pa] : Controlled reactor pres- sure
+oc.Tin  =   350+273.15; % [°C] : Feed temperature (heat exchanger inlet)
+oc.xH2  =   0.6972;     % [1] : Mole fraction of H2 at reactor inlet
+oc.xN2  =   0.24;       % [1] : Mole fraction of N2 at reactor inlet
+oc.xNH3 =   0.0212;     % [1] : Mole fraction of NH3 at reactor inlet
+oc.xAr  =   1-(oc.xH2 + oc.xN2 + oc.xNH3); % [1] : Mole fraction of NH3 at reactor inlet
+oc.x    =   [oc.xH2 oc.xN2 oc.xNH3 oc.xAr];
 
-% change of unit for Feed Temperature °C->K
-oc.Tin=oc.Tin+273.15; % [K] : Feed temperature (heat exchanger inlet)
 
-% avarege molar mass for inlet of reactor
-p.Mtilde=0;
-for i=1:4
-    p.Mtilde=p.Mtilde+sum([oc.x(i)*p.M(i)]);
-end % for i
-%p.M(5)=p.Mtilde;
-clear i;
+% molar inlet stream
+oc.nDotFeed=oc.mDot/sum(oc.x.*p.M); % [kmol/s]
+
+% dimensionless pressure
+p.pStar=oc.p/p.pAtmos; % [10]
+
+% % Initial condition as feed composition
+% oc.IC=(oc.p*p.V*p.epsilon)/(p.N*oc.Tin*p.R).*oc.x;
+oc.nAr=[oc.IC(4)];
+
+% Initial condition as Figure 4
+oc.IC(1:3)=0.48;
+oc.IC(4:7)=0.46;
+oc.IC(8:20)=0.43;
+oc.IC(21:24)=0.425;
+oc.IC(25:150)=0.42;
+oc.IC=oc.x.*oc.IC';
+% amount 
+oc.nAr=(oc.p*p.V*p.epsilon)/(p.N*oc.Tin*p.R).*oc.x(4);
+
