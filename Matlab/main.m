@@ -8,7 +8,7 @@
 % -[i] after an equation in matlab file refers to an equation in main paper
 function main
 
-parameter(); % to load p and oc in workspaceç
+parameter(); % to load p and oc in workspace
 
 tSpan=linspace(0,1,11); % no idea what unit
 n0=reshape(repmat([0.3836 0.1321 0.0117 0.0229],p.N,1)',p.n*p.N,1);
