@@ -11,12 +11,12 @@ function main
 
 parameter(); % to load p and oc in workspaceç
 
-tSpan=linspace(0,1.9,p.timeStep); % [h]
-n0=reshape(oc.IC(:,1:p.n)',p.n*p.N,1);
+tSpan=linspace(0,1,p.timeStep); % [h]
+n0=reshape(oc.IC',p.n*p.N,1);
 
 options = odeset();
 
-[t,n] = ode45(@(t,n)ODE_System(t,n,p,oc),tSpan,n0,options);
+[t,n] = ode23(@(t,n)ODE_System(t,n,p,oc),tSpan,n0,options);
 
 make_Plots(p,oc,t,n);
 

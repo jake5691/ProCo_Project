@@ -19,8 +19,8 @@ p.MN2   =   28.02;      % [kg/kmol] : Molar mass of N2 molecule
 p.MNH3  =   17.034;     % [kg/kmol] : Molar mass of NH3 molecule
 p.M     =   [p.MH2 p.MN2 p.MNH3 p.MAr];
 p.N     =   150;        % [1] : Number of reactor compartments (Decided after a few trials)
-p.n     =   3;          % [1] : Number of  species
-p.eta   =   [-3 -1 2];  % [1] : Stoichiometric matrix [H2 N2 NH3], changed because inert gas does not take part in reaction
+p.n     =   4;          % [1] : Number of  species
+p.eta   =   [-3 -1 2 0];  % [1] : Stoichiometric matrix [H2 N2 NH3], changed because inert gas does not take part in reaction
 p.pAtmos=   1.01325e5;  % [Pa] : Atmospheric pressure
 p.R     =   8314;       % [J/kmol K] : Universal gas constant
 p.rhoC  =   2200;       % [kg/m^3] : Packing density of cat- alyst
@@ -29,7 +29,7 @@ p.V     =   57.2;       % [m^3] : Volume of the reactor
 p.timeStep= 11;         % [1] : Number of timesteps
 p.speciesNames={'H2','N2','NH3','Ar'};
 % Operating conditions
-oc.mDot =   67.6*60;    % [kg/h] : Mass flow rate - reactor inlet
+oc.mDot =   67.6;    % [kg/h] : Mass flow rate - reactor inlet
 oc.p    =   178e5;      % [Pa] : Controlled reactor pres- sure
 oc.Tin  =   350+273.15; % [°C] : Feed temperature (heat exchanger inlet)
 oc.xH2  =   0.6972;     % [1] : Mole fraction of H2 at reactor inlet
@@ -56,6 +56,7 @@ oc.IC(8:20)=0.43;
 oc.IC(21:24)=0.425;
 oc.IC(25:150)=0.42;
 oc.IC=oc.x.*oc.IC';
+oc.Tic=[440 475 525 540]+273.15;
 % amount of Ar at each compartment
-oc.nAr=(oc.p*p.V*p.epsilon)/(p.N*oc.Tin*p.R).*oc.x(4);
+% oc.nAr=(oc.p*p.V*p.epsilon)/(p.N.*oc.Tic*p.R).*oc.x(4);
 

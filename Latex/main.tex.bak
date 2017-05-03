@@ -212,7 +212,7 @@ b=A \cdot {n}_r.  \label{f:energyMatrix}
 \end{align}
 where $A \in \mathbb{R}^{N \times N}$ and $\dot{n}_r, b \in \mathbb{R}^{N \times 1}$. The components of $b$ and $A$ can be written as
 \begin{align}
-b_1&= T_r C_p \dot{n}^{r,g} \Big|_{V_1} - \Delta \tilde{H}_r n_r r m_c \Big|_{V_1} + \dot{n}^{feed}_r\ \ \left[ T_r C_p \Big|_{V_1} + \dot{n}^{feed}_r \bar{\tilde{c}}_p  n_r\Big|_{V_1} \left( T^{r}_1 - T_r\Big|_{V_1} \right) \right] \\
+b_1&= T_r C_p \dot{n}^{r,g} \Big|_{V_1} - \Delta \tilde{H}_r n_r r m_c \Big|_{V_1} + \dot{n}^{feed}_r\ \ \left[ T_r C_p \Big|_{V_1} + \bar{\tilde{c}}_p  n_r\Big|_{V_1} \left( T^{r}_1 - T_r\Big|_{V_1} \right) \right] \\
 b_i&= T_r C_p \dot{n}^{r,g} \Big|_{V_i} - \Delta \tilde{H}_r n_r r m_c \Big|_{V_i}\ ,\ i\ \epsilon\  \{ 2,3,\dots ,N\}
 \end{align}
 and
@@ -237,10 +237,20 @@ T_o=\frac{T^r_N + \frac{U A}{\dot{m}_i \hat{c}^i_p} T^{feed}}{1+ \frac{U A}{\dot
 Where $\dot{m}_i=\sum_j \dot{m}^i_j$ is the overall mass flow through volume compartment $i$.
 
 \subsection{Possible Control Design}
-
+The desired process is clearly nonlinear and it exist at least one unstable steady state as shown in \cite{Pattabathula2016} and \cite{Morud1998}. To control this process \cite{Pattabathula2016} suggest at least manipulating the feed temperature before the heat exchanger to get a stabilized reactor performance. \cite{Jinasena2016} are also recommending to manipulate the feed composition $x^{feed}$, the feed flow rate $\dot{m}$ and the pressure $p$ in the reactor. These would all be suitable measurements for a controller.\\
+The controlled variables would be the temperature at the reactor outlet $T^r_N$ and the composition of the species at the end of the reactor $x^r_N$.\\
+This would give us the demanded \emph{MIMO} structure for a controller design.
 \subsection{Degree of Freedom Analysis}
-
-
+The degrees of freedom $DOF$ of a system are defined as
+\begin{align}
+DOF:=NV-NE
+\end{align}
+where $NV$ is the number of dependent variables and $NE$ is the number of independent equations. For one compartment in the model we get the following
+\begin{align*}
+NV=\\
+NE=
+\end{align*}
+considering the feed stream we get a degree of freedom of $DOF=$.
 \section{Simulation Results}
 
 

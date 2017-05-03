@@ -3,8 +3,8 @@ function dndt=ODE_System(t,nVec,p,oc)
 %% values needed for later computations
 % making vector to (p.Nxp.n)-Matrix
 nMat=reshape(nVec',p.n,p.N)';
-% summ over all species in one compartment
-nSum=sum(nMat,2)+oc.nAr;
+% sum over all species in one compartment
+nSum=sum(nMat,2);
 % Temperature
 T=(oc.p * p.V * p.epsilon)./( p.N * nSum * p.R); % [12]
 % molar fraction x for each compartment
@@ -23,7 +23,7 @@ nFlowMatrix=nFlow(p,oc,nSum,T,x,sum(nGenMatrix,2),r);
 
 % calculating three ODEs (Ar calulated by 'closing condition': sum(x_j)=1)
 % for each compartment (x_j: mole fraction of species j)
-dndtMat=[oc.nDotFeed*oc.x(1:p.n); nFlowMatrix(1:end-1,:)]-nFlowMatrix+nGenMatrix;
+dndtMat=[oc.nDotFeed*oc.x; nFlowMatrix(1:end-1,:)]-nFlowMatrix+nGenMatrix;
 
 
 dndt=reshape(dndtMat',p.N*p.n,1); % making matrix to vector
@@ -68,7 +68,7 @@ function nFlow=nFlow(p,oc,nVec,T,x,nGenVec,r)
 Cp=nVec*p.cpg + p.Cp; % [22]
 %% making vector b
 % computing Temperature at inlet of reactor (after heat exchanger heated up gas)
-Tinlet=Tinlet(p,oc,T);
+Tinlet=TempInlet(p,oc,T);
 % first element: special case because inlet/feed
 bOne=Cp(1)*T(1)*nGenVec(1) - p.deltaH*p.mC*nVec(1)*r(1) + oc.nDotFeed *...
     (T(1)*Cp(1) + p.cpg*nVec(1) * (Tinlet - T(1)) ); % [26]
@@ -94,7 +94,7 @@ nFlow=x.*nDot; % [30]
 end % function
 
 
-function Tinlet=Tinlet(p,oc,T)
+function Tinlet=TempInlet(p,oc,T)
 % Temperatute at inlet of reactor (warmed up in heat exchanger)
 Tinlet=(oc.Tin + (p.U*p.A)/(oc.mDot*p.cpg) * T(p.N)) / (1 + (p.U*p.A)/(oc.mDot*p.cpg));
 end % function

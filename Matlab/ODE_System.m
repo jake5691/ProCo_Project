@@ -4,7 +4,7 @@ function dndt=ODE_System(t,nVec,p,oc)
 % making vector to (p.Nxp.n)-Matrix
 nMat=reshape(nVec',p.n,p.N)';
 % sum over all species in one compartment
-nSum=sum(nMat,2)+oc.nAr;
+nSum=sum(nMat,2);
 % Temperature
 T=(oc.p * p.V * p.epsilon)./( p.N * nSum * p.R); % [12]
 % molar fraction x for each compartment
@@ -23,7 +23,7 @@ nFlowMatrix=nFlow(p,oc,nSum,T,x,sum(nGenMatrix,2),r);
 
 % calculating three ODEs (Ar calulated by 'closing condition': sum(x_j)=1)
 % for each compartment (x_j: mole fraction of species j)
-dndtMat=[oc.nDotFeed*oc.x(1:p.n); nFlowMatrix(1:end-1,:)]-nFlowMatrix+nGenMatrix;
+dndtMat=[oc.nDotFeed*oc.x; nFlowMatrix(1:end-1,:)]-nFlowMatrix+nGenMatrix;
 
 
 dndt=reshape(dndtMat',p.N*p.n,1); % making matrix to vector

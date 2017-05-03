@@ -46,10 +46,10 @@ figure(2)
 % calculating temperature for each compartment at each time
 A=zeros(p.n*p.N,p.N);
 for i=1:p.N
-    A(p.n*(i-1)+1:p.n*i,i)=[1;1;1];
+    A(p.n*(i-1)+1:p.n*i,i)=[1;1;1;1];
 end % for
 % sum over all species in one compartment
-nSum=n*A+oc.nAr;
+nSum=n*A;
 % Temperature
 T=(oc.p * p.V * p.epsilon)./( p.N * nSum * p.R); % [12]
 T=(T'); % transpose and switch upside down of T matrix
@@ -72,18 +72,19 @@ xlabel('time t [h]')
 
 
 %% figure3
-% plotting NH3 amount as heat map
+% plotting amount as heat map
 figure(3)
-nNH3=zeros(p.timeStep,p.N);
+desiredSpec=1;
+nSpec=zeros(p.timeStep,p.N);
 for i=1:p.N
-nNH3(:,i)=n(:,3*i); % 
+nSpec(:,i)=n(:,desiredSpec+p.n*(i-1)); % 
 end % for
 % row: point in time
 % column: compartment
 
-imagesc(nNH3'); % plot
+imagesc(nSpec'); % plot
 colorbar; % show colorbar
-title('amount of NH3 [kmol]')
+title(['amount of ',p.speciesNames{desiredSpec},' [kmol]'])
 
 % y-axis
 yticks([1 25 50 75 100 125 150])
