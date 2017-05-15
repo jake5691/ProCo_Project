@@ -1,3 +1,4 @@
+
 function dndt=ODE_System(t,nVec,p,oc)
 
 %% values needed for later computations
@@ -81,7 +82,7 @@ b=[bOne; b];
 % writting entries on main diagonal
 A=diag(T.*Cp,0); % [28]
 % writting entries on first minor diagonal below
-a=-T(2:end).*Cp(2:end) + p.cpg*nVec(2:end) .* (T(1:end-1) - T(2:end)); % [29]
+a=-T(2:end).*Cp(2:end) - p.cpg*nVec(2:end) .* (T(1:end-1) - T(2:end)); % [29]
 A=A+diag(a,-1);
 
 

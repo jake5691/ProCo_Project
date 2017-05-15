@@ -1,5 +1,11 @@
 function make_Plots(p,oc,t,n)
 close all;
+set(groot,'defaulttextinterpreter','latex')
+set(groot, 'defaultAxesTickLabelInterpreter','latex');
+set(groot, 'defaultLegendInterpreter','latex');
+set(groot,'DefaultAxesFontSize',19,'DefaultTextFontSize',16)
+
+
 %% figure1
 % plotting amuont of species
 figure(1)
@@ -54,7 +60,7 @@ nSum=n*A;
 T=(oc.p * p.V * p.epsilon)./( p.N * nSum * p.R); % [12]
 T=(T'); % transpose and switch upside down of T matrix
 imagesc(T); % plot
-colorbar; % show colorbar
+colorbar('TickLabelInterpreter','latex'); % show colorbar
 title('Temperature [K]')
 
 % y-axis
@@ -83,7 +89,7 @@ end % for
 % column: compartment
 
 imagesc(nSpec'); % plot
-colorbar; % show colorbar
+colorbar('TickLabelInterpreter','latex'); % show colorbar
 title(['amount of ',p.speciesNames{desiredSpec},' [kmol]'])
 
 % y-axis
@@ -97,5 +103,51 @@ end % for
 xticks([1:p.timeStep])
 xticklabels(labelxTicks)
 xlabel('time t [h]')
+
+
+
+% plotting mole fraction of species
+figure(4)
+
+% interesting timePoint, which should get plotted
+timePoint=[1 5 p.timeStep];
+
+for i=1:3
+    % species to plot i=[1=H2, 2=N2, 3=NH3]
+    species=[i:p.n:p.N*p.n];
+    
+    % molar fraction of  each species to different times stored in one matrix
+    nMat=flipud(n(timePoint,species)'); % flipud so compartment 150 is up and 1 is down
+    % row: time
+    % column: compartment
+    for j=1:3
+    for k=1:p.N
+    nGen(k,j)=sum(n(timePoint(j),[4*k-3:4*k]),2);
+    end % for i
+    end % for j
+    plotMat=nMat./nGen;
+    
+    % compute minimum and maximum value
+    nMin=min(plotMat(:));
+    nMax=max(plotMat(:));
+    
+    % each species gets a new subplot
+    subplot(1,3,i)
+    plot(plotMat',[1:p.N],'+')
+    title(['species: ',p.speciesNames{i}])
+    % y-axis
+    yticks([1 25 50 75 100 125 150])
+    yticklabels({'150','125','100','75','50','25','1'})
+    ylabel('compartment [1]')
+    % x-axis
+    xticks([nMin mean([nMin,nMax]) nMax]);
+    xticklabels({[num2str(nMin)],[num2str(mean([nMin,nMax]))],[num2str(nMax)]})
+    xlabel('molar fraction of species $x_j$ [1]')
+    % legend
+    legend([num2str(t(timePoint(1))),'h'],...
+        [num2str(t(timePoint(2))),'h'],...
+        [num2str(t(timePoint(3))),'h']);
+    
+end % for
 
 end % function
